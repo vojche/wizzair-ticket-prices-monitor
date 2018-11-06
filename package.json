@@ -1,0 +1,16 @@
+{
+  "name": "wizzair-flights-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Vojche",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.2.1",
+    "opn": "^5.4.0"
+  }
+}
