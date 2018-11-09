@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const opn = require("opn");
 
-const WIZZAIR_API_ENDPOINT = 'https://be.wizzair.com/8.5.2/Api/asset/farechart';
+const WIZZAIR_API_ENDPOINT = 'https://be.wizzair.com/8.6.0/Api/asset/farechart';
 const WIZZAIR_PAGE = `https://wizzair.com/#/booking/select-flight/${process.argv[2]}/${process.argv[3]}/${process.argv[4]}/`;
 const body = {
     adultCount: 1,
@@ -19,7 +19,11 @@ const body = {
 };
 
 (async function() {
-    const currentPrice = await getNewestTicketPrice();  
+    let currentPrice = await getNewestTicketPrice();
+    if (!currentPrice) {
+        console.log('No flight found for the date you entered!');
+        return;
+    }
     console.log(`Current ticket price is: ${currentPrice.amount} ${currentPrice.currencyCode}`);
 
     while (true) {
@@ -33,12 +37,17 @@ const body = {
             opn(WIZZAIR_PAGE);
             return;
           }
+          else if (latestPrice.amount > currentPrice.amount) {
+              console.log('Prices are going up! :(');
+              console.log(`Newest ticket price is: ${latestPrice.amount} ${latestPrice.currencyCode}`);
+              currentPrice = latestPrice;
+          }
         } catch (err) {
           console.error("Error looping", err);
         }
     
         await sleep(900000);
-      }
+    }
 })();
 
 async function getNewestTicketPrice() {
@@ -55,7 +64,7 @@ async function getNewestTicketPrice() {
     if (flightMatch) {
         return flightMatch.price;
     }
-    return "No flight found for the current date";
+    return;
 }
 
 async function sleep(ms) {
