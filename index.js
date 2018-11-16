@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const opn = require("opn");
 
-const WIZZAIR_API_ENDPOINT = 'https://be.wizzair.com/8.6.0/Api/asset/farechart';
+const WIZZAIR_API_ENDPOINT = 'https://be.wizzair.com/8.7.0/Api/asset/farechart';
 const WIZZAIR_PAGE = `https://wizzair.com/#/booking/select-flight/${process.argv[2]}/${process.argv[3]}/${process.argv[4]}/`;
 const body = {
     adultCount: 1,
