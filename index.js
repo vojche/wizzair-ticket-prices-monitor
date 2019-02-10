@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const opn = require("opn");
 
-const WIZZAIR_API_ENDPOINT = 'https://be.wizzair.com/8.7.0/Api/asset/farechart';
+const WIZZAIR_API_ENDPOINT = 'https://be.wizzair.com/9.5.9/Api/asset/farechart';
 const WIZZAIR_PAGE = `https://wizzair.com/#/booking/select-flight/${process.argv[2]}/${process.argv[3]}/${process.argv[4]}/`;
 const body = {
     adultCount: 1,
@@ -54,7 +54,7 @@ async function getNewestTicketPrice() {
     const response = await fetch(WIZZAIR_API_ENDPOINT, {
         method: 'post',
         body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0 (compatible; Rigor/1.0.0; http://rigor.com)', },
     }).then(res => res.json())
     .catch(error => console.log("Error fetching data", error));
     
